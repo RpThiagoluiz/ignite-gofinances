@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": "./src/",
+    "module": "commonjs",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "target": "ES6",
+    "paths": {
+      "~/*": ["src/*"],
+      "@screens/*": ["screens/*"],
+      "@components": ["components/*"],
+      "@utils": ["utils/*"],
+      "@store": ["store/*"]
+    }
+  },
+  "exclude": ["node_modules", "android", "ios"],
+  "strict": true,
+  "extends": "expo/tsconfig.base"
+}

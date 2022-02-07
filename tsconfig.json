@@ -10,13 +10,14 @@
     "removeComments": true,
     "sourceMap": true,
     "strictNullChecks": true,
-    "target": "ES6",
+    "target": "ES2019",
     "paths": {
       "~/*": ["src/*"],
       "@screens/*": ["screens/*"],
-      "@components": ["components/*"],
-      "@utils": ["utils/*"],
-      "@store": ["store/*"]
+      "@components/*": ["components/*"],
+      "@utils/*": ["utils/*"],
+      "@store/*": ["store/*"],
+      "@theme/*": ["global/theme/*"]
     }
   },
   "exclude": ["node_modules", "android", "ios"],

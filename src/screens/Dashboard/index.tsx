@@ -1,5 +1,8 @@
 import React from 'react'
-import { HighLightCard } from '@components/HighLightCard'
+import { Platform } from 'react-native'
+import { HighLightCard, TransactionCard } from '@components/index'
+import { Datalist } from '@components/interface'
+
 import {
   Container,
   Header,
@@ -10,10 +13,41 @@ import {
   UserGreeting,
   UserName,
   IconPower,
-  HighLightCards
+  HighLightCards,
+  Transactions,
+  TransactionsTitle,
+  TransactionsList
 } from './styles'
+import { getBottomSpace } from 'react-native-iphone-x-helper'
 
 export const Dashboard = () => {
+  const data: Datalist[] = [
+    {
+      id: 1,
+      type: 'positive',
+      title: 'Desenvolvimento de site',
+      amount: 'R$ 12.001,01',
+      category: { name: 'vendas', icon: 'dollar-sign' },
+      date: '13/06/2020'
+    },
+    {
+      id: 2,
+      type: 'negative',
+      title: 'Burger PIX',
+      amount: 'R$ 1.001,01',
+      category: { name: 'vendas', icon: 'coffee' },
+      date: '13/06/2020'
+    },
+    {
+      id: 3,
+      type: 'positive',
+      title: 'Desenvolvimento',
+      amount: 'R$ 12.001,01',
+      category: { name: 'vendas', icon: 'dollar-sign' },
+      date: '13/06/2020'
+    }
+  ]
+
   return (
     <Container>
       <Header>
@@ -28,11 +62,23 @@ export const Dashboard = () => {
           <IconPower name="power" />
         </UserWrapper>
       </Header>
-      <HighLightCards horizontal showsHorizontalScrollIndicator={false}>
-        <HighLightCard />
-        <HighLightCard />
-        <HighLightCard />
+      <HighLightCards>
+        <HighLightCard title="Entradas" amount="R$ 17.400,00" lastTransaction="Ultima entrada dia 13" type="up" />
+        <HighLightCard title="Saidas" amount="R$ 5.999,00" lastTransaction="Onti" type="down" />
+        <HighLightCard title="Total" amount="R$ 11.599,00" lastTransaction="Balanco geraldo" type="total" />
       </HighLightCards>
+      <Transactions>
+        <TransactionsTitle>Listagem</TransactionsTitle>
+        <TransactionsList
+          data={data} // ???
+          keyExtractor={(item) => String(item.id)}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={
+            Platform.OS === 'android' ? { paddingBottom: 30 } : { paddingBottom: getBottomSpace() + 2 }
+          }
+          renderItem={({ item }) => <TransactionCard data={item} />}
+        />
+      </Transactions>
     </Container>
   )
 }

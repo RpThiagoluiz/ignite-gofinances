@@ -1,0 +1,49 @@
+import styled from 'styled-components/native'
+import { Feather } from '@expo/vector-icons'
+import { RFValue } from 'react-native-responsive-fontsize'
+
+interface TransactionProps {
+  type: 'positive' | 'negative'
+}
+
+export const Container = styled.View`
+  background-color: ${({ theme }) => theme.colors.shape};
+  border-radius: 8px;
+  padding: 19px 23px;
+  margin: 5px 0;
+`
+export const Title = styled.Text`
+  font-size: ${RFValue(14)}px;
+  font-family: ${({ theme }) => theme.fonts.regular};
+`
+export const Amount = styled.Text<TransactionProps>`
+  font-size: ${RFValue(18)}px;
+  font-family: ${({ theme }) => theme.fonts.regular};
+  color: ${({ theme, type }) => (type === 'positive' ? theme.colors.success : theme.colors.attention)};
+`
+export const Footer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`
+export const Category = styled.View`
+  flex-direction: row;
+  align-items: center;
+`
+export const Icon = styled(Feather)`
+  font-size: ${RFValue(20)}px;
+  color: ${({ theme }) => theme.colors.text};
+`
+export const CategoryName = styled.Text`
+  font-size: ${RFValue(14)}px;
+  color: ${({ theme }) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.regular};
+  margin-left: 10px;
+  margin-top: 4px;
+`
+export const Date = styled.Text`
+  font-size: ${RFValue(14)}px;
+  color: ${({ theme }) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.regular};
+  margin-top: 4px;
+`

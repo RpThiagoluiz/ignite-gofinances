@@ -1,13 +1,18 @@
-import styled from 'styled-components/native'
+import styled, { css } from 'styled-components/native'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { Feather } from '@expo/vector-icons'
 
-export const Container = styled.View`
-  background-color: ${({ theme }) => theme.colors.shape};
-  width: ${RFValue(300)}px;
+interface typeProps {
+  type: 'up' | 'down' | 'total'
+}
+
+export const Container = styled.View<typeProps>`
+  background-color: ${({ theme, type }) => (type !== 'total' ? theme.colors.shape : theme.colors.secondary)};
+  width: ${RFValue(250)}px;
   border-radius: 8px;
   padding: 19px 23px;
   padding-bottom: ${RFValue(42)}px;
+  margin-right: ${RFValue(16)}px;
 `
 
 export const Header = styled.View`
@@ -15,27 +20,45 @@ export const Header = styled.View`
   justify-content: space-between;
 `
 
-export const Title = styled.Text`
+export const Title = styled.Text<typeProps>`
   font-size: ${RFValue(14)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
-  color: ${({ theme }) => theme.colors.text_dark};
+  color: ${({ theme, type }) => (type !== 'total' ? theme.colors.text_dark : theme.colors.shape)};
 `
 
-export const Icon = styled(Feather)`
+export const Icon = styled(Feather)<typeProps>`
   font-size: ${RFValue(40)}px;
+
+  ${(props) =>
+    props.type === 'up' &&
+    css`
+      color: ${({ theme }) => theme.colors.success};
+    `}
+
+  ${(props) =>
+    props.type === 'down' &&
+    css`
+      color: ${({ theme }) => theme.colors.attention};
+    `}
+
+   ${(props) =>
+    props.type === 'total' &&
+    css`
+      color: ${({ theme }) => theme.colors.shape};
+    `}
 `
 
 export const Footer = styled.View``
 
-export const Amount = styled.Text`
+export const Amount = styled.Text<typeProps>`
   font-size: ${RFValue(24)}px;
   font-family: ${({ theme }) => theme.fonts.medium};
-  color: ${({ theme }) => theme.colors.text_dark};
+  color: ${({ theme, type }) => (type !== 'total' ? theme.colors.text_dark : theme.colors.shape)};
   margin-top: 18px;
 `
 
-export const LastTransaction = styled.Text`
+export const LastTransaction = styled.Text<typeProps>`
   font-size: ${RFValue(12)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme, type }) => (type !== 'total' ? theme.colors.text : theme.colors.shape)};
 `

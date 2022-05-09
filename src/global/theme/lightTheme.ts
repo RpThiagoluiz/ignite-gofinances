@@ -16,7 +16,16 @@ export default {
     title: '#363f5f',
     text: '#969cb2',
     text_dark: '#000000',
-    background: '#f0f2f5'
+    background: '#f0f2f5',
+
+    iconsRegister: {
+      income: '#12a454',
+      outcome: '#e83f5b'
+    },
+    iconsRegister_disabled: {
+      income: 'rgba(18, 164, 84, 0.5)',
+      outcome: 'rgba(232, 63, 91, 0.5)'
+    }
   },
 
   fonts: {

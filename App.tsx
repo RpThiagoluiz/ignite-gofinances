@@ -1,6 +1,7 @@
 import React from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Dashboard } from '@screens/Dashboard'
+import { Register } from '@screens/Register'
 import { ThemeProvider } from 'styled-components'
 import { useFonts, Poppins_400Regular, Poppins_500Medium, Poppins_700Bold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
@@ -21,7 +22,7 @@ export default function App() {
   return (
     <ThemeProvider theme={lightTheme}>
       <StatusBar style="light" />
-      <Dashboard />
+      <Register />
     </ThemeProvider>
   )
 }

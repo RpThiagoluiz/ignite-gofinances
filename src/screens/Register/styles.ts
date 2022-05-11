@@ -17,4 +17,8 @@ export const ContainerSelectedType = styled.View`
   margin-top: 20px;
 `
 
+export const ContainerButton = styled.View`
+  margin-top: 20px;
+`
+
 export const Fields = styled.View``

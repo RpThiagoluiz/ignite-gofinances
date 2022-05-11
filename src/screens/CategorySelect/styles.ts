@@ -36,7 +36,7 @@ export const FlatListContainer = styled(
 export const Icon = styled(Feather)<CategorySelectColor>`
   font-size: ${RFValue(20)}px;
   color: ${({ theme, isActive }) => (isActive ? theme.colors.secondary : theme.colors.text)};
-  margin-right: ${RFValue(10)}px;-
+  margin-right: ${RFValue(10)}px;
 `
 export const Name = styled.Text<CategorySelectColor>`
   font-family: ${({ theme }) => theme.fonts.regular};

@@ -1,6 +1,8 @@
 import React from 'react'
+import { Keyboard, Platform } from 'react-native'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 
-import { Container, Header, Title } from './styles'
+import { Container, Header, Title, InnerView } from './styles'
 
 interface Props {
   title: string
@@ -9,12 +11,13 @@ interface Props {
 
 export const ContainerScreens = ({ title, children }: Props) => {
   return (
-    <Container>
+    <Container behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <Header>
         <Title>{title}</Title>
       </Header>
-
-      {children}
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} containerStyle={{ flex: 1 }} style={{ flex: 1 }}>
+        <InnerView>{children}</InnerView>
+      </TouchableWithoutFeedback>
     </Container>
   )
 }

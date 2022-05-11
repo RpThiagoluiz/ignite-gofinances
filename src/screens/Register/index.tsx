@@ -1,7 +1,14 @@
 import React, { useState } from 'react'
-import { Button, Input, TransactionTypeButton } from '@components/index'
-
-import { Container, Header, Title, ContainerForm, Fields, ContainerTransactionTypeButton } from './styles'
+import {
+  Button,
+  CategorySelectButton,
+  Input,
+  TransactionTypeButton,
+  ContainerScreens,
+  CustomModal
+} from '@components/index'
+import { ContainerForm, Fields, ContainerTransactionTypeButton, ContainerSelectedType } from './styles'
+import { CategorySelect } from '@screens/CategorySelect'
 
 enum TransactionTypeEnum {
   income = 'income',
@@ -13,16 +20,26 @@ export const Register = () => {
     TransactionTypeEnum.income | TransactionTypeEnum.outcome
   >(TransactionTypeEnum.income)
 
+  const [categoryModalOpen, setCategoryModalOpen] = useState(false)
+  const [category, setCategory] = useState({
+    key: 'category',
+    name: 'Categoria'
+  })
+
   const handleSelectedTransactionType = (type: TransactionTypeEnum.income | TransactionTypeEnum.outcome) => {
     setSelectedTransactionType(type)
   }
 
-  return (
-    <Container>
-      <Header>
-        <Title>Cadastro</Title>
-      </Header>
+  const handleOpenSelectedCategoryModal = () => {
+    setCategoryModalOpen(true)
+  }
 
+  const handleCloseSelectedCategoryModal = () => {
+    setCategoryModalOpen(false)
+  }
+
+  return (
+    <ContainerScreens title="Cadastro">
       <ContainerForm>
         <Fields>
           <Input placeholder="Nome" />
@@ -42,10 +59,21 @@ export const Register = () => {
               onPress={() => handleSelectedTransactionType(TransactionTypeEnum.outcome)}
             />
           </ContainerTransactionTypeButton>
+          <ContainerSelectedType>
+            <CategorySelectButton title={category.name} onPress={handleOpenSelectedCategoryModal} />
+          </ContainerSelectedType>
         </Fields>
 
         <Button title="Enviar" />
       </ContainerForm>
-    </Container>
+
+      <CustomModal visible={categoryModalOpen}>
+        <CategorySelect
+          category={category}
+          setCategory={setCategory}
+          closeSelectCategory={handleCloseSelectedCategoryModal}
+        />
+      </CustomModal>
+    </ContainerScreens>
   )
 }

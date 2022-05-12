@@ -28,6 +28,8 @@ export default {
     }
   },
 
+  loadingSize: 24,
+
   fonts: {
     regular: 'Poppins_400Regular',
     medium: 'Poppins_500Medium',

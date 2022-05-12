@@ -1,5 +1,5 @@
 import React from 'react'
-import { Platform } from 'react-native'
+import { ActivityIndicator, Platform } from 'react-native'
 import { FadeInView, HighLightCard, TransactionCard } from '@components/index'
 import { Datalist } from '@components/interface'
 

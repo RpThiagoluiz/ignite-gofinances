@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Alert } from 'react-native'
-import { useForm } from 'react-hook-form'
-
+import { FieldValues, useForm } from 'react-hook-form'
+import uuid from 'react-native-uuid'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { CategorySelect } from '@screens/CategorySelect'
 import {
@@ -15,15 +15,11 @@ import {
 } from '@components/index'
 import { ContainerForm, Fields, ContainerTransactionTypeButton, ContainerSelectedType, ContainerButton } from './styles'
 import { registerWalletSchema } from 'helpers'
+import { clearTransactions, setTransactions } from 'localStorage'
 
 enum TransactionTypeEnum {
   income = 'income',
   outcome = 'outcome'
-}
-
-interface FormData {
-  name: string
-  amount: string
 }
 
 export const Register = () => {
@@ -37,10 +33,13 @@ export const Register = () => {
     name: 'Categoria'
   })
 
+  const [loading, setLoading] = useState(false)
+
   const {
     control,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    reset: resetForm
   } = useForm({
     resolver: yupResolver(registerWalletSchema)
   })
@@ -57,22 +56,37 @@ export const Register = () => {
     setCategoryModalOpen(false)
   }
 
-  const handleRegister = (form: FormData) => {
+  const handleRegister = async (form: FieldValues) => {
     if (category.key === 'category') {
       return Alert.alert(`Selecione a categoria.`)
     }
 
-    //const formatedNumber = Number(form.amount.replace(/,/g, '.')) * 100
-
     const formatedData = {
+      id: String(uuid.v4()),
       name: form.name,
       amount: form.amount,
       type: selectedTransactionType,
-      category: category.key
+      category: category.key,
+      date: new Date()
     }
 
-    console.log(`formatedData`, formatedData)
+    await setTransactions(setLoading, formatedData)
+
+    setSelectedTransactionType(TransactionTypeEnum.income)
+    setCategory({
+      key: 'category',
+      name: 'Categoria'
+    })
+    resetForm()
   }
+
+  useEffect(() => {
+    const getResult = async () => {
+      // await clearTransactions(setLoading)
+    }
+
+    getResult()
+  }, [])
 
   return (
     <FadeInView>
@@ -114,7 +128,7 @@ export const Register = () => {
             </ContainerSelectedType>
           </Fields>
           <ContainerButton>
-            <Button title="Enviar" onPress={handleSubmit(handleRegister)} />
+            <Button title="Enviar" loading={loading} loadingColor="shape" onPress={handleSubmit(handleRegister)} />
           </ContainerButton>
         </ContainerForm>
 

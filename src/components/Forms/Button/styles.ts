@@ -4,10 +4,12 @@ import styled from 'styled-components/native'
 
 export const Container = styled(TouchableOpacity)`
   width: 100%;
+  justify-content: center;
+  align-items: center;
   background: ${({ theme }) => theme.colors.secondary};
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.secondary_light};
-  align-items: center;
+
   padding: ${RFValue(10)}px;
 `
 

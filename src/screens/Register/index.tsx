@@ -14,7 +14,7 @@ import {
   FadeInView
 } from '@components/index'
 import { ContainerForm, Fields, ContainerTransactionTypeButton, ContainerSelectedType, ContainerButton } from './styles'
-import { registerWalletSchema } from 'helpers'
+import { registerWalletSchema, noficationMessage } from 'helpers'
 import { clearTransactions, setTransactions } from 'localStorage'
 
 enum TransactionTypeEnum {
@@ -72,12 +72,14 @@ export const Register = () => {
 
     await setTransactions(setLoading, formatedData)
 
-    setSelectedTransactionType(TransactionTypeEnum.income)
-    setCategory({
-      key: 'category',
-      name: 'Categoria'
-    })
-    resetForm()
+    setTimeout(() => {
+      setSelectedTransactionType(TransactionTypeEnum.income)
+      setCategory({
+        key: 'category',
+        name: 'Categoria'
+      })
+      resetForm()
+    }, 1075)
   }
 
   useEffect(() => {

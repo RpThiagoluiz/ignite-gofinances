@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Alert } from 'react-native'
+import { noficationMessage } from 'helpers'
 import { LocalStorageTransactionKey } from '../../interface'
 
 interface FormatedData {
@@ -19,12 +19,21 @@ export const setTransactions = async (setLoading: (loading: boolean) => void, da
     const formatedNewData = [...newData, data]
 
     await AsyncStorage.setItem(dataKey, JSON.stringify(formatedNewData))
+    noficationMessage({
+      type: 'success',
+      message: 'Dados salvos com sucesso',
+      duration: 2050
+    })
   } catch (error) {
     console.log(error)
-    Alert.alert(`Não foi possível salvar.`)
+    noficationMessage({
+      type: 'danger',
+      message: 'Falha ao salvar os dados.',
+      duration: 2000
+    })
   } finally {
     setTimeout(() => {
       setLoading(false)
-    }, 1525)
+    }, 1000)
   }
 }

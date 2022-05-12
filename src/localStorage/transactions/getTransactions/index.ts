@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Alert } from 'react-native'
+import { noficationMessage } from 'helpers'
 import { LocalStorageTransactionKey } from '../../interface'
 
 export const getTransactions = async (setLoading: (loading: boolean) => void) => {
@@ -15,7 +15,11 @@ export const getTransactions = async (setLoading: (loading: boolean) => void) =>
     }
   } catch (error) {
     console.log(error)
-    Alert.alert(`Não foi possível recuperar.`)
+    noficationMessage({
+      type: 'danger',
+      message: 'Falha na recuperação de dados.',
+      duration: 2000
+    })
     return null
   } finally {
     setLoading(false)

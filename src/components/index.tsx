@@ -2,6 +2,7 @@ export { ContainerScreens } from './ContainerScreens'
 export { CustomModal } from './CustomModal'
 export { HighLightCard } from './HighLightCard'
 export { TransactionCard } from './TransactionCard'
+export { NotifyFlashMessage } from './NotifyFlashMessage'
 
 // Forms
 export { Input } from './Forms/Input'

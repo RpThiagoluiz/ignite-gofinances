@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Alert } from 'react-native'
+import { noficationMessage } from 'helpers'
 import { LocalStorageTransactionKey } from '../../interface'
 
 export const clearTransactions = async (setLoading: (loading: boolean) => void) => {
@@ -7,9 +7,18 @@ export const clearTransactions = async (setLoading: (loading: boolean) => void) 
   try {
     setLoading(true)
     await AsyncStorage.removeItem(dataKey)
+    noficationMessage({
+      type: 'success',
+      message: 'Limpeza concluida com sucesso',
+      duration: 2000
+    })
   } catch (error) {
     console.log(error)
-    Alert.alert(`Não foi possível remover.`)
+    noficationMessage({
+      type: 'danger',
+      message: 'Falha na limpeza de dados.',
+      duration: 2000
+    })
   } finally {
     setLoading(false)
   }

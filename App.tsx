@@ -6,6 +6,8 @@ import { ThemeProvider } from 'styled-components'
 import { useFonts, Poppins_400Regular, Poppins_500Medium, Poppins_700Bold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
 import lightTheme from '@theme/lightTheme'
+import { NotifyFlashMessage } from '@components/NotifyFlashMessage'
+import { Platform } from 'react-native'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -23,6 +25,7 @@ export default function App() {
       <ThemeProvider theme={lightTheme}>
         <StatusBar style="light" />
         <Routes />
+        <NotifyFlashMessage />
       </ThemeProvider>
     </GestureHandlerRootView>
   )

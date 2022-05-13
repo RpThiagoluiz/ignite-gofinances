@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Alert } from 'react-native'
 import { FieldValues, useForm } from 'react-hook-form'
 import uuid from 'react-native-uuid'
@@ -14,8 +14,8 @@ import {
   FadeInView
 } from '@components/index'
 import { ContainerForm, Fields, ContainerTransactionTypeButton, ContainerSelectedType, ContainerButton } from './styles'
-import { registerWalletSchema, noficationMessage } from 'helpers'
-import { clearTransactions, setTransactions } from 'localStorage'
+import { registerWalletSchema } from 'helpers'
+import { setTransactions } from 'localStorage'
 
 enum TransactionTypeEnum {
   income = 'income',
@@ -56,6 +56,15 @@ export const Register = () => {
     setCategoryModalOpen(false)
   }
 
+  const resetAllData = () => {
+    setSelectedTransactionType(TransactionTypeEnum.income)
+    setCategory({
+      key: 'category',
+      name: 'Categoria'
+    })
+    resetForm()
+  }
+
   const handleRegister = async (form: FieldValues) => {
     if (category.key === 'category') {
       return Alert.alert(`Selecione a categoria.`)
@@ -73,22 +82,9 @@ export const Register = () => {
     await setTransactions(setLoading, formatedData)
 
     setTimeout(() => {
-      setSelectedTransactionType(TransactionTypeEnum.income)
-      setCategory({
-        key: 'category',
-        name: 'Categoria'
-      })
-      resetForm()
-    }, 1075)
+      resetAllData()
+    }, 750)
   }
-
-  useEffect(() => {
-    const getResult = async () => {
-      // await clearTransactions(setLoading)
-    }
-
-    getResult()
-  }, [])
 
   return (
     <FadeInView>

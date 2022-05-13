@@ -7,12 +7,9 @@ export const getTransactions = async (setLoading: (loading: boolean) => void) =>
   try {
     setLoading(true)
     const data = await AsyncStorage.getItem(dataKey)
-    if (data) {
-      const transactions = JSON.parse(data)
-      return transactions
-    } else {
-      return null
-    }
+
+    const transactions = data ? JSON.parse(data) : []
+    return transactions
   } catch (error) {
     console.log(error)
     noficationMessage({

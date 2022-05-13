@@ -1,5 +1,6 @@
-import React from 'react'
-import { ActivityIndicator, Platform } from 'react-native'
+import React, { useCallback, useState } from 'react'
+import { useFocusEffect } from '@react-navigation/native'
+import { Platform } from 'react-native'
 import { FadeInView, HighLightCard, TransactionCard } from '@components/index'
 import { Datalist } from '@components/interface'
 
@@ -21,34 +22,35 @@ import {
 } from './styles'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { getTransactions } from 'localStorage'
+import { formatedAmount, formatedDate } from '@utils/index'
 
 export const Dashboard = () => {
-  const data: Datalist[] = [
-    {
-      id: 1,
-      type: 'positive',
-      title: 'Desenvolvimento de site',
-      amount: 'R$ 12.001,01',
-      category: { name: 'vendas', icon: 'dollar-sign' },
-      date: '13/06/2020'
-    },
-    {
-      id: 2,
-      type: 'negative',
-      title: 'Burger PIX',
-      amount: 'R$ 1.001,01',
-      category: { name: 'vendas', icon: 'coffee' },
-      date: '13/06/2020'
-    },
-    {
-      id: 3,
-      type: 'positive',
-      title: 'Desenvolvimento',
-      amount: 'R$ 12.001,01',
-      category: { name: 'vendas', icon: 'dollar-sign' },
-      date: '13/06/2020'
-    }
-  ]
+  const [data, setData] = useState<Datalist[]>([])
+  const [loading, setLoading] = useState(false)
+
+  const getData = async () => {
+    const response = await getTransactions(setLoading)
+
+    const formatedResult: Datalist[] = response.map((item: Datalist) => {
+      const amount = formatedAmount(item.amount)
+      const date = formatedDate(item.date)
+
+      return {
+        ...item,
+        amount,
+        date
+      }
+    })
+
+    setData(formatedResult)
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      getData()
+    }, [])
+  )
 
   return (
     <FadeInView>
@@ -87,7 +89,7 @@ export const Dashboard = () => {
             contentContainerStyle={
               Platform.OS === 'android' ? { paddingBottom: 30 } : { paddingBottom: getBottomSpace() + 2 }
             }
-            renderItem={({ item }) => <TransactionCard data={item} />}
+            renderItem={({ item }) => (loading ? null : <TransactionCard data={item} />)}
           />
         </Transactions>
       </Container>

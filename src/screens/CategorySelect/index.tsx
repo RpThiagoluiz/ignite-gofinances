@@ -1,8 +1,7 @@
 import React from 'react'
 import { Button, ContainerScreens, FadeInView } from '@components/index'
-import { categories } from '@utils/index'
+import { categories } from 'common'
 import { CategorySelectContainer, Icon, Name, Separator, Footer, FlatListContainer } from './styles'
-
 interface Category {
   key: string
   name: string

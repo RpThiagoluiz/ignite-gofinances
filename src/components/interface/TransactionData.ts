@@ -1,12 +1,7 @@
-interface ICategory {
-  name: string
-  icon: string
-}
-
 export interface TransactionData {
-  type: 'positive' | 'negative'
-  title: string
+  type: 'income' | 'outcome'
+  name: string
   amount: string
-  category: ICategory
+  category: string
   date: string
 }

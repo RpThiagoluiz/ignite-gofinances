@@ -8,5 +8,8 @@ React navigation v6
 `melhorias`
 
 [x] - Loading button.
-Listas diferentes para entradas e saidas.
-Mensagem de aviso.
+[x] - Mensagem de aviso.
+[ ] - Listas diferentes para entradas e saidas.
+[ ] - loading Dashboard
+[ ] - clear data Button
+[ ] - EmptyData Component

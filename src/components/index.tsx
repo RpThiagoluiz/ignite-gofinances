@@ -3,6 +3,7 @@ export { CustomModal } from './CustomModal'
 export { HighLightCard } from './HighLightCard'
 export { TransactionCard } from './TransactionCard'
 export { NotifyFlashMessage } from './NotifyFlashMessage'
+export { ModalDescription } from './ModalDescription'
 
 // Forms
 export { Input } from './Forms/Input'

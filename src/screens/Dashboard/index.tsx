@@ -24,13 +24,32 @@ import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { getTransactions } from 'localStorage'
 import { formatedAmount, formatedDate } from '@utils/index'
+import { sumValues } from '@utils/sumValues'
 
 export const Dashboard = () => {
   const [data, setData] = useState<Datalist[]>([])
   const [loading, setLoading] = useState(false)
+  const [highLightData, setHighLightData] = useState({
+    totalEntries: '',
+    totalExpenses: '',
+    totalBalance: ''
+  })
 
   const getData = async () => {
     const response = await getTransactions(setLoading)
+
+    const { entriesSum, expensesSum } = sumValues(response)
+    const total = entriesSum - expensesSum
+
+    const formatedTotal = formatedAmount(total)
+    const formatedEntries = formatedAmount(entriesSum)
+    const formatedExpenses = formatedAmount(expensesSum)
+
+    setHighLightData({
+      totalEntries: formatedEntries,
+      totalExpenses: formatedExpenses,
+      totalBalance: formatedTotal
+    })
 
     const formatedResult: Datalist[] = response.map((item: Datalist) => {
       const amount = formatedAmount(item.amount)
@@ -76,14 +95,24 @@ export const Dashboard = () => {
           </UserWrapper>
         </Header>
         <HighLightCards>
-          <HighLightCard title="Entradas" amount="R$ 170.400,00" lastTransaction="Ultima entrada dia 13" type="up" />
-          <HighLightCard title="Saidas" amount="R$ 5.999,00" lastTransaction="Onti" type="down" />
-          <HighLightCard title="Total" amount="R$ 11.599,00" lastTransaction="Balanco geraldo" type="total" />
+          <HighLightCard
+            title="Entradas"
+            amount={highLightData.totalEntries}
+            lastTransaction="Ultima entrada dia 13"
+            type="up"
+          />
+          <HighLightCard title="Saidas" amount={highLightData.totalExpenses} lastTransaction="Onti" type="down" />
+          <HighLightCard
+            title="Total"
+            amount={highLightData.totalBalance}
+            lastTransaction="Balanco geraldo"
+            type="total"
+          />
         </HighLightCards>
         <Transactions>
           <TransactionsTitle>Listagem</TransactionsTitle>
           <TransactionsList
-            data={data} // ???
+            data={data}
             keyExtractor={(item) => String(item.id)}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={

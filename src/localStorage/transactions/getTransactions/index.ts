@@ -19,6 +19,8 @@ export const getTransactions = async (setLoading: (loading: boolean) => void) =>
     })
     return null
   } finally {
-    setLoading(false)
+    setTimeout(() => {
+      setLoading(false)
+    }, 320)
   }
 }

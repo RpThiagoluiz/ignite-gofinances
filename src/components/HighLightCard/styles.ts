@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components/native'
+import { ActivityIndicator } from 'react-native'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { Feather } from '@expo/vector-icons'
 
@@ -61,4 +62,7 @@ export const LastTransaction = styled.Text<typeProps>`
   font-size: ${RFValue(12)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
   color: ${({ theme, type }) => (type !== 'total' ? theme.colors.text : theme.colors.shape)};
+`
+export const Loading = styled(ActivityIndicator)`
+  color: ${({ theme }) => theme.colors.success};
 `

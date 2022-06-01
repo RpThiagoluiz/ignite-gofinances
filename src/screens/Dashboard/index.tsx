@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { useFocusEffect } from '@react-navigation/native'
-import { Platform } from 'react-native'
+import { ActivityIndicator, Platform } from 'react-native'
 import { FadeInView, HighLightCard, TransactionCard } from '@components/index'
 import { Datalist } from '@components/interface'
 
@@ -18,13 +18,15 @@ import {
   HighLightCards,
   Transactions,
   TransactionsTitle,
-  TransactionsList
+  TransactionsList,
+  LoadingContainer
 } from './styles'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { getTransactions } from 'localStorage'
 import { formatedAmount, formatedDate } from '@utils/index'
 import { sumValues } from '@utils/sumValues'
+import { useTheme } from 'styled-components'
 
 export const Dashboard = () => {
   const [data, setData] = useState<Datalist[]>([])
@@ -34,6 +36,8 @@ export const Dashboard = () => {
     totalExpenses: '',
     totalBalance: ''
   })
+
+  const theme = useTheme()
 
   const getData = async () => {
     const response = await getTransactions(setLoading)
@@ -100,26 +104,41 @@ export const Dashboard = () => {
             amount={highLightData.totalEntries}
             lastTransaction="Ultima entrada dia 13"
             type="up"
+            loading={loading}
           />
-          <HighLightCard title="Saidas" amount={highLightData.totalExpenses} lastTransaction="Onti" type="down" />
+          <HighLightCard
+            title="Saidas"
+            amount={highLightData.totalExpenses}
+            lastTransaction="Onti"
+            type="down"
+            loading={loading}
+          />
           <HighLightCard
             title="Total"
             amount={highLightData.totalBalance}
             lastTransaction="Balanco geraldo"
             type="total"
+            loading={loading}
           />
         </HighLightCards>
         <Transactions>
           <TransactionsTitle>Listagem</TransactionsTitle>
-          <TransactionsList
-            data={data}
-            keyExtractor={(item) => String(item.id)}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={
-              Platform.OS === 'android' ? { paddingBottom: 30 } : { paddingBottom: getBottomSpace() + 2 }
-            }
-            renderItem={({ item }) => (loading ? null : <TransactionCard data={item} />)}
-          />
+
+          {loading ? (
+            <LoadingContainer>
+              <ActivityIndicator size="large" color={theme.colors.attention} />
+            </LoadingContainer>
+          ) : (
+            <TransactionsList
+              data={data}
+              keyExtractor={(item) => String(item.id)}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={
+                Platform.OS === 'android' ? { paddingBottom: 30 } : { paddingBottom: getBottomSpace() + 2 }
+              }
+              renderItem={({ item }) => <TransactionCard data={item} />}
+            />
+          )}
         </Transactions>
       </Container>
     </FadeInView>

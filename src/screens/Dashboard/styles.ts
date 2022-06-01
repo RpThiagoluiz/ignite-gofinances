@@ -1,5 +1,5 @@
 import styled from 'styled-components/native'
-import { Platform, FlatList, FlatListProps } from 'react-native'
+import { Platform, FlatList, FlatListProps, ActivityIndicator } from 'react-native'
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 
@@ -92,3 +92,13 @@ export const TransactionsTitle = styled.Text`
 export const TransactionsList = styled(FlatList as new (props: FlatListProps<Datalist>) => FlatList<Datalist>).attrs(
   {}
 )``
+
+export const LoadingContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`
+
+export const LoadingData = styled(ActivityIndicator)`
+  color: ${({ theme }) => theme.colors.success};
+`
